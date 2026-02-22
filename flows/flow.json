@@ -1,0 +1,370 @@
+[
+    {
+        "id": "ui_btn_selfuse",
+        "type": "ui_button",
+        "z": "tab_solax_steps",
+        "name": "SelfUse",
+        "group": "ui_group_solax_steps",
+        "order": 1,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "SelfUse (reg31=0)",
+        "icon": "home",
+        "payload": "0",
+        "payloadType": "num",
+        "topic": "reg31",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "fn_write_reg31"
+            ]
+        ]
+    },
+    {
+        "id": "ui_btn_manual",
+        "type": "ui_button",
+        "z": "tab_solax_steps",
+        "name": "Manual",
+        "group": "ui_group_solax_steps",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Manual (reg31=3)",
+        "icon": "hand",
+        "payload": "3",
+        "payloadType": "num",
+        "topic": "reg31",
+        "x": 155,
+        "y": 120,
+        "wires": [
+            [
+                "fn_write_reg31"
+            ]
+        ]
+    },
+    {
+        "id": "ui_btn_stop",
+        "type": "ui_button",
+        "z": "tab_solax_steps",
+        "name": "Stop",
+        "group": "ui_group_solax_steps",
+        "order": 4,
+        "width": 4,
+        "height": 1,
+        "passthru": false,
+        "label": "Stop (reg32=0)",
+        "icon": "pause",
+        "payload": "0",
+        "payloadType": "num",
+        "topic": "reg32",
+        "x": 155,
+        "y": 180,
+        "wires": [
+            [
+                "fn_write_reg32"
+            ]
+        ]
+    },
+    {
+        "id": "ui_btn_charge",
+        "type": "ui_button",
+        "z": "tab_solax_steps",
+        "name": "Laden",
+        "group": "ui_group_solax_steps",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Laden (reg32=1)",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "battery-charging",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "reg32",
+        "topicType": "str",
+        "x": 160,
+        "y": 220,
+        "wires": [
+            [
+                "fn_write_reg32"
+            ]
+        ]
+    },
+    {
+        "id": "ui_btn_discharge",
+        "type": "ui_button",
+        "z": "tab_solax_steps",
+        "name": "Ontladen",
+        "group": "ui_group_solax_steps",
+        "order": 7,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "label": "Ontladen (reg32=2)",
+        "icon": "battery-minus",
+        "payload": "2",
+        "payloadType": "num",
+        "topic": "reg32",
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "fn_write_reg32"
+            ]
+        ]
+    },
+    {
+        "id": "ui_slider_charge",
+        "type": "ui_slider",
+        "z": "tab_solax_steps",
+        "name": "Charge current",
+        "label": "Charge (A)",
+        "tooltip": "",
+        "group": "ui_group_solax_steps",
+        "order": 8,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "outs": "end",
+        "topic": "reg36",
+        "topicType": "str",
+        "min": 0,
+        "max": "30",
+        "step": "0.5",
+        "className": "",
+        "x": 190,
+        "y": 340,
+        "wires": [
+            [
+                "fn_write_reg36"
+            ]
+        ]
+    },
+    {
+        "id": "ui_slider_discharge",
+        "type": "ui_slider",
+        "z": "tab_solax_steps",
+        "name": "Discharge current",
+        "label": "Discharge (A)",
+        "tooltip": "",
+        "group": "ui_group_solax_steps",
+        "order": 9,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "outs": "end",
+        "topic": "reg37",
+        "topicType": "str",
+        "min": 0,
+        "max": "30",
+        "step": 1,
+        "className": "",
+        "x": 210,
+        "y": 400,
+        "wires": [
+            [
+                "fn_write_reg37"
+            ]
+        ]
+    },
+    {
+        "id": "fn_write_reg31",
+        "type": "function",
+        "z": "tab_solax_steps",
+        "name": "Write reg31 (0x001F)",
+        "func": "msg.payload = {\n  fc: 6,\n  unitid: 1,\n  address: 31,\n  quantity: 1,\n  value: Number(msg.payload)\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 100,
+        "wires": [
+            [
+                "delay_200ms",
+                "dbg_out"
+            ]
+        ]
+    },
+    {
+        "id": "fn_write_reg32",
+        "type": "function",
+        "z": "tab_solax_steps",
+        "name": "Write reg32 (0x0020)",
+        "func": "msg.payload = {\n  fc: 6,\n  unitid: 1,\n  address: 32,\n  quantity: 1,\n  value: Number(msg.payload)\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 230,
+        "wires": [
+            [
+                "delay_200ms",
+                "dbg_out"
+            ]
+        ]
+    },
+    {
+        "id": "fn_write_reg36",
+        "type": "function",
+        "z": "tab_solax_steps",
+        "name": "Write reg36 (0x0024)",
+        "func": "msg.payload = {\n  fc: 6,\n  unitid: 1,\n  address: 36,\n  quantity: 1,\n  value: Number(msg.payload *10)\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 340,
+        "wires": [
+            [
+                "delay_200ms",
+                "dbg_out"
+            ]
+        ]
+    },
+    {
+        "id": "fn_write_reg37",
+        "type": "function",
+        "z": "tab_solax_steps",
+        "name": "Write reg37 (0x0025)",
+        "func": "msg.payload = {\n  fc: 6,\n  unitid: 1,\n  address: 37,\n  quantity: 1,\n  value: Number(msg.payload*10)\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 400,
+        "wires": [
+            [
+                "delay_200ms",
+                "dbg_out"
+            ]
+        ]
+    },
+    {
+        "id": "delay_200ms",
+        "type": "delay",
+        "z": "tab_solax_steps",
+        "name": "Delay 200ms",
+        "pauseType": "delay",
+        "timeout": "200",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [
+                "mb_write_fc6"
+            ]
+        ]
+    },
+    {
+        "id": "mb_write_fc6",
+        "type": "modbus-flex-write",
+        "z": "tab_solax_steps",
+        "name": "SolaX FC6 write (select server)",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "server": "445f42be03139ecc",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 920,
+        "y": 260,
+        "wires": [
+            [],
+            [
+                "dbg_err"
+            ]
+        ]
+    },
+    {
+        "id": "dbg_out",
+        "type": "debug",
+        "z": "tab_solax_steps",
+        "name": "DBG outgoing payload",
+        "active": false,
+        "tosidebar": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 710,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "dbg_err",
+        "type": "debug",
+        "z": "tab_solax_steps",
+        "name": "DBG write errors",
+        "active": true,
+        "tosidebar": true,
+        "complete": "true",
+        "targetType": "msg",
+        "x": 930,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "ui_group_solax_steps",
+        "type": "ui_group",
+        "name": "Manual Steps (FC6)",
+        "tab": "ui_tab_solax2",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false
+    },
+    {
+        "id": "445f42be03139ecc",
+        "type": "modbus-client",
+        "name": "10.0.36.75",
+        "clienttype": "tcp",
+        "bufferCommands": false,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "10.0.36.75",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "1",
+        "commandDelay": "200",
+        "clientTimeout": "2000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "ui_tab_solax2",
+        "type": "ui_tab",
+        "name": "SolaX",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
